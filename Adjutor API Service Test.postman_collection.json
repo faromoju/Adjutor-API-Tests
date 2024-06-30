@@ -1,0 +1,3682 @@
+{
+	"info": {
+		"_postman_id": "0b6146b6-b01a-4587-b604-d44bcfe1e15b",
+		"name": "Adjutor API Service Test",
+		"description": "Automated Test Scripts for Adjutor API Service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19572898"
+	},
+	"item": [
+		{
+			"name": "Validation",
+			"item": [
+				{
+					"name": "Verify Customer Bank Account",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json();\r",
+									"\r",
+									"pm.test(\"HTTP Status code is as expected\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response Message is as expected\", function () {\r",
+									"    pm.expect(responseJson.message).to.equal(\"Successful\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"The rest of the Response Body is as expected\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"success\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"account_number\": \"2209529872\",\r\n    \"bank_code\": \"057\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}verification/bankaccount",
+							"host": [
+								"{{base_url}}verification"
+							],
+							"path": [
+								"bankaccount"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Verify Customer Bank Account (Invalid account number)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"account_number\": \"2209529872\",\r\n    \"bank_code\": \"057\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}verification/bankaccount",
+									"host": [
+										"{{base_url}}verification"
+									],
+									"path": [
+										"bankaccount"
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 30 Jun 2024 17:20:24 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "76"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "X-Request-ID",
+									"value": "509a7b79-14ea-4fab-874a-d96d595f145a"
+								},
+								{
+									"key": "Last-Modified",
+									"value": "Sun, 30 Jun 2024 17:20:23 GMT"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"4c-FuntR9wvOdtS03cAo6ZZSM2Wq3c\""
+								},
+								{
+									"key": "CF-Cache-Status",
+									"value": "DYNAMIC"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "89bfd3a22824951a-LHR"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"error\",\n    \"message\": \"Invalid account number\",\n    \"meta\": {\n        \"balance\": 520\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Check Karma for Customer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json();\r",
+									"\r",
+									"pm.test(\"HTTP Status code is as expected\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response Message is as expected\", function () {\r",
+									"    pm.expect(responseJson.message).to.equal(\"Identity not found in karma\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"The rest of the Response Body is as expected\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"success\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}verification/karma/:identity",
+							"host": [
+								"{{base_url}}verification"
+							],
+							"path": [
+								"karma",
+								":identity"
+							],
+							"variable": [
+								{
+									"key": "identity",
+									"value": "{{identity}}"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Check Karma for Customer (Identity not found in karma)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}verification/karma/:identity",
+									"host": [
+										"{{base_url}}verification"
+									],
+									"path": [
+										"karma",
+										":identity"
+									],
+									"variable": [
+										{
+											"key": "identity",
+											"value": "{{identity}}"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 30 Jun 2024 17:27:06 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "X-Request-ID",
+									"value": "14ed305b-fd01-428a-b20f-7c21bde42058"
+								},
+								{
+									"key": "Last-Modified",
+									"value": "Sun, 30 Jun 2024 17:27:06 GMT"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"53-/qnLJfuyzQ/Vxxll9g27tmEYr0o\""
+								},
+								{
+									"key": "CF-Cache-Status",
+									"value": "DYNAMIC"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "89bfdd777a6c9563-LHR"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"Identity not found in karma\",\n    \"meta\": {\n        \"balance\": 520\n    }\n}"
+						}
+					]
+				}
+			],
+			"description": "Endpoints for General customer validations"
+		},
+		{
+			"name": "Credit Bureaus",
+			"item": [
+				{
+					"name": "Get Credit Report from CRC Credit Bureau",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json();\r",
+									"\r",
+									"pm.test(\"HTTP Status code is as expected\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response Message is as expected\", function () {\r",
+									"    pm.expect(responseJson.message).to.equal(\"No CRC History\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"The rest of the Response Body is as expected\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"error\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}creditbureaus/crc/:bvn",
+							"host": [
+								"{{base_url}}creditbureaus"
+							],
+							"path": [
+								"crc",
+								":bvn"
+							],
+							"variable": [
+								{
+									"key": "bvn",
+									"value": "{{dummy_bvn}}"
+								}
+							]
+						},
+						"description": "This request is used to check the CRC database for the credit history of a customer using their BVN.\n\n#### Path Variables\n\n`bvn`: `required` The BVN of the customer."
+					},
+					"response": [
+						{
+							"name": "Get Credit Report from CRC Credit Bureau (No CRC History)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{base_url}}creditbureaus/crc/:bvn",
+									"host": [
+										"{{base_url}}creditbureaus"
+									],
+									"path": [
+										"crc",
+										":bvn"
+									],
+									"variable": [
+										{
+											"key": "bvn",
+											"value": "{{dummy_bvn}}"
+										}
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 30 Jun 2024 17:30:12 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "68"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "X-Request-ID",
+									"value": "0ae1e6cb-8b6a-4f0b-bc36-46c27584bd66"
+								},
+								{
+									"key": "Last-Modified",
+									"value": "Sun, 30 Jun 2024 17:30:10 GMT"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"44-p+dLR6gWebaAr724Xg5QjfB0NcM\""
+								},
+								{
+									"key": "CF-Cache-Status",
+									"value": "DYNAMIC"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "89bfe1f70c189563-LHR"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"error\",\n    \"message\": \"No CRC History\",\n    \"meta\": {\n        \"balance\": 520\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Credit Report from FirstCentral Credit Bureau",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json();\r",
+									"\r",
+									"pm.test(\"HTTP Status code is as expected\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response Message is as expected\", function () {\r",
+									"    pm.expect(responseJson.message).to.equal(\"Successful\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"The rest of the Response Body is as expected\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"success\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}creditbureaus/firstcentral/:bvn",
+							"host": [
+								"{{base_url}}creditbureaus"
+							],
+							"path": [
+								"firstcentral",
+								":bvn"
+							],
+							"variable": [
+								{
+									"key": "bvn",
+									"value": "{{dummy_bvn}}"
+								}
+							]
+						},
+						"description": "This request is used to check the CRC database for the credit history of a customer using their BVN.\n\n#### Path Variables\n\n`bvn`: `required` The BVN of the customer."
+					},
+					"response": [
+						{
+							"name": "Get Credit Report from FirstCentral Credit Bureau (Success)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}creditbureaus/firstcentral/:bvn",
+									"host": [
+										"{{base_url}}creditbureaus"
+									],
+									"path": [
+										"firstcentral",
+										":bvn"
+									],
+									"variable": [
+										{
+											"key": "bvn",
+											"value": "{{dummy_bvn}}"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 30 Jun 2024 17:31:22 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "X-Request-ID",
+									"value": "3a17ced8-2bec-4848-978a-da79dd34a7c3"
+								},
+								{
+									"key": "Last-Modified",
+									"value": "Sun, 30 Jun 2024 17:31:20 GMT"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"20f-0G1EQBZ5bgslQAbF3sKWng5eJBc\""
+								},
+								{
+									"key": "CF-Cache-Status",
+									"value": "DYNAMIC"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "89bfe3aebea59563-LHR"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"Successful\",\n    \"data\": [\n        {\n            \"SubjectList\": []\n        },\n        {\n            \"PersonalDetailsSummary\": []\n        },\n        {\n            \"CreditSummary\": [\n                {\n                    \"TotalNumberOfAccountsReported\": \"0\",\n                    \"NumberOfAccountsInGoodStanding\": \"0\",\n                    \"NumberOfAccountsInBadStanding\": \"0\"\n                }\n            ]\n        },\n        {\n            \"PerformanceClassification\": [\n                {\n                    \"NoOfLoansPerforming\": null,\n                    \"NoOfLoansSubstandard\": null,\n                    \"NoOfLoansDoubtful\": null,\n                    \"NoOfLoansLost\": null\n                }\n            ]\n        },\n        {\n            \"EnquiryDetails\": [\n                {\n                    \"SubscriberEnquiryResultID\": null,\n                    \"ProductID\": null,\n                    \"MatchingRate\": null,\n                    \"SubscriberEnquiryEngineID\": null\n                }\n            ]\n        }\n    ],\n    \"meta\": {\n        \"cost\": 100,\n        \"balance\": 520\n    }\n}"
+						}
+					]
+				}
+			],
+			"description": "Endpoints for Customer Credit Information from two Credit Bureaus"
+		},
+		{
+			"name": "Decisioning",
+			"item": [
+				{
+					"name": "Get Decision Models",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json();\r",
+									"\r",
+									"pm.test(\"HTTP Status code is as expected\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response Message is as expected\", function () {\r",
+									"    pm.expect(responseJson.message).to.equal(\"Successful\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"The rest of the Response Body is as expected\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"success\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}decisioning/models",
+							"host": [
+								"{{base_url}}decisioning"
+							],
+							"path": [
+								"models"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get Decision Models (Success)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}decisioning/models",
+									"host": [
+										"{{base_url}}decisioning"
+									],
+									"path": [
+										"models"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 30 Jun 2024 17:32:18 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "X-Request-ID",
+									"value": "d946743a-f237-4e9a-b004-b6d2a8b736d8"
+								},
+								{
+									"key": "Last-Modified",
+									"value": "Sun, 30 Jun 2024 17:32:18 GMT"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"4d7-Voax3yoMBQ+vzwFYLrrVDn31kCA\""
+								},
+								{
+									"key": "CF-Cache-Status",
+									"value": "DYNAMIC"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "89bfe5167a9b9563-LHR"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"Successful\",\n    \"data\": [\n        {\n            \"id\": 9235,\n            \"product_id\": null,\n            \"org_id\": 5276,\n            \"version_id\": 0,\n            \"country\": \"NGA\",\n            \"name\": \"Default Lendsqr decision model\",\n            \"description\": \"Default decision model apply to all lender or products without a decision model set for it\",\n            \"decision_setting\": {\n                \"karma\": {\n                    \"required\": true,\n                    \"sequence\": 1,\n                    \"continue_on_failure\": false,\n                    \"pre_offer\": true\n                },\n                \"ecosystem\": {\n                    \"required\": true,\n                    \"sequence\": 2,\n                    \"continue_on_failure\": false,\n                    \"pre_offer\": true\n                },\n                \"credit_bureau\": {\n                    \"required\": true,\n                    \"sequence\": 3,\n                    \"continue_on_failure\": false\n                }\n            },\n            \"offer_setting\": [\n                {\n                    \"rule\": {\n                        \"*\": [\n                            1,\n                            {\n                                \"var\": [\n                                    \"requested_amount\"\n                                ]\n                            }\n                        ]\n                    },\n                    \"maximum\": 1000000000,\n                    \"minimum\": 10\n                }\n            ],\n            \"status\": \"active\",\n            \"created_on\": \"2024-06-27T16:42:51.000Z\"\n        },\n        {\n            \"id\": 9236,\n            \"product_id\": null,\n            \"org_id\": 5276,\n            \"version_id\": 0,\n            \"country\": \"NGA\",\n            \"name\": \"Default Offline Decision Model\",\n            \"description\": \"Default decision model apply to all offline loan products on Lendsqr.\",\n            \"decision_setting\": {\n                \"karma\": {\n                    \"required\": true,\n                    \"sequence\": 1,\n                    \"continue_on_failure\": false,\n                    \"pre_offer\": true\n                },\n                \"credit_bureau\": {\n                    \"required\": true,\n                    \"sequence\": 2,\n                    \"continue_on_failure\": false\n                }\n            },\n            \"offer_setting\": [\n                {\n                    \"rule\": {\n                        \"*\": [\n                            1,\n                            {\n                                \"var\": [\n                                    \"requested_amount\"\n                                ]\n                            }\n                        ]\n                    },\n                    \"maximum\": 1000000000,\n                    \"minimum\": 10\n                }\n            ],\n            \"status\": \"active\",\n            \"created_on\": \"2024-06-27T16:42:51.000Z\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Decision Model Details",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json();\r",
+									"\r",
+									"pm.test(\"HTTP Status code is as expected\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response Message is as expected\", function () {\r",
+									"    pm.expect(responseJson.message).to.equal(\"Successful\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify the Decisioning Model ID\", function () {\r",
+									"    pm.expect(responseJson.data.id).to.equal(9236);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"The rest of the Response Body is as expected\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"success\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}decisioning/models/:id/settings",
+							"host": [
+								"{{base_url}}decisioning"
+							],
+							"path": [
+								"models",
+								":id",
+								"settings"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{decision_model_id}}"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get Decision Model Details (Success)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}decisioning/models/:id/settings",
+									"host": [
+										"{{base_url}}decisioning"
+									],
+									"path": [
+										"models",
+										":id",
+										"settings"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null,
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "{{decision_model_id}}"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 30 Jun 2024 17:33:06 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "X-Request-ID",
+									"value": "bdbe7b7a-c27c-419d-b881-ae824bc06e52"
+								},
+								{
+									"key": "Last-Modified",
+									"value": "Sun, 30 Jun 2024 17:33:05 GMT"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"25b-MxQ9FAUlsooLjsB7YDPYEmVUd4s\""
+								},
+								{
+									"key": "CF-Cache-Status",
+									"value": "DYNAMIC"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "89bfe63f1ff49563-LHR"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"Successful\",\n    \"data\": {\n        \"id\": 9236,\n        \"product_id\": null,\n        \"org_id\": 5276,\n        \"version_id\": 0,\n        \"country\": \"NGA\",\n        \"name\": \"Default Offline Decision Model\",\n        \"description\": \"Default decision model apply to all offline loan products on Lendsqr.\",\n        \"decision_setting\": {\n            \"karma\": {\n                \"required\": true,\n                \"sequence\": 1,\n                \"continue_on_failure\": false,\n                \"pre_offer\": true\n            },\n            \"credit_bureau\": {\n                \"required\": true,\n                \"sequence\": 2,\n                \"continue_on_failure\": false\n            }\n        },\n        \"offer_setting\": [\n            {\n                \"rule\": {\n                    \"*\": [\n                        1,\n                        {\n                            \"var\": [\n                                \"requested_amount\"\n                            ]\n                        }\n                    ]\n                },\n                \"maximum\": 1000000000,\n                \"minimum\": 10\n            }\n        ],\n        \"status\": \"active\",\n        \"created_on\": \"2024-06-27T16:42:51.000Z\",\n        \"settings\": []\n    }\n}"
+						},
+						{
+							"name": "Get Decision Model Details (Non-Existent Decision Model)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}decisioning/models/:id/settings",
+									"host": [
+										"{{base_url}}decisioning"
+									],
+									"path": [
+										"models",
+										":id",
+										"settings"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null,
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "9017"
+										}
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 30 Jun 2024 17:33:56 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "55"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "X-Request-ID",
+									"value": "6c3afbec-c2f1-49dd-abeb-de72bf1182bb"
+								},
+								{
+									"key": "Last-Modified",
+									"value": "Sun, 30 Jun 2024 17:33:56 GMT"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"37-rSAho8DF7U7lkYJn3aK0qoXo7O0\""
+								},
+								{
+									"key": "CF-Cache-Status",
+									"value": "DYNAMIC"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "89bfe77aa88d9563-LHR"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"error\",\n    \"message\": \"Decision model not found\"\n}"
+						}
+					]
+				}
+			],
+			"description": "Endpoints to make decision on customer credit status"
+		},
+		{
+			"name": "Embedded Loans and Payments",
+			"item": [
+				{
+					"name": "Loans",
+					"item": [
+						{
+							"name": "Get Loan Products",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const responseJson = pm.response.json();\r",
+											"\r",
+											"pm.test(\"HTTP Status code is as expected\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response Message is as expected\", function () {\r",
+											"    pm.expect(responseJson.message).to.equal(\"This offer is not available, please make another request for a loan\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"The rest of the Response Body is as expected\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"error\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer sk_live_1wT7Xg2UxhgFUcTwhg47It14OUI18aYHbFsblcmt",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}loans/products",
+									"host": [
+										"{{base_url}}loans"
+									],
+									"path": [
+										"products"
+									]
+								},
+								"description": "This endpoint is used to retrieve all the loan products a distributor is subscribed to. As mentioned, this could be one or multiple loan product(s) from a single lender or multiple loan products from multiple lenders."
+							},
+							"response": [
+								{
+									"name": "Get Loan Products (Offer not available)",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer sk_live_1wT7Xg2UxhgFUcTwhg47It14OUI18aYHbFsblcmt",
+												"type": "text",
+												"disabled": true
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}loans/products",
+											"host": [
+												"{{base_url}}loans"
+											],
+											"path": [
+												"products"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Sun, 30 Jun 2024 17:36:10 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "98"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "X-Request-ID",
+											"value": "b194d6d6-8af9-4978-bd64-25be6ec91e12"
+										},
+										{
+											"key": "Last-Modified",
+											"value": "Sun, 30 Jun 2024 17:36:10 GMT"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"62-lLTiE+UTkZi4k1srCWaTeQqinbs\""
+										},
+										{
+											"key": "CF-Cache-Status",
+											"value": "DYNAMIC"
+										},
+										{
+											"key": "Server",
+											"value": "cloudflare"
+										},
+										{
+											"key": "CF-RAY",
+											"value": "89bfeac0186a9563-LHR"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"error\",\n    \"message\": \"This offer is not available, please make another request for a loan\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Initialize Loan Application",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const responseJson = pm.response.json();\r",
+											"\r",
+											"pm.test(\"HTTP Status code is as expected\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response Message is as expected\", function () {\r",
+											"    pm.expect(responseJson.message).to.equal(\"Successful\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"The rest of the Response Body is as expected\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"success\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"product_id\": \"p1r2o3d4u5c6c7t8i9d0\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}loans/initialize",
+									"host": [
+										"{{base_url}}loans"
+									],
+									"path": [
+										"initialize"
+									]
+								},
+								"description": "Using the product ID that has been retrieved from the GET loan products endpoint, make a call to this endpoint to generate the web page URL that can be embedded within your web or mobile platform.\n\nThe request body also allows for meta fields that would prepoulate and disable these form fields within the the web page\n\n> NOTE: All fields on the web page would be disabled except email and phone number as these details may be different on the lender's plaform. \n  \n\n### Meta fields\n| Property | Type | Details | **Options** |\n| --- | --- | --- | --- |\n| `requested_amount` | number | This should be the amount the customer wants to check out with (BNPL) or has requested.  <br>Currency is in Naira | NA |\n| `proposed_tenor` | number | This is the duration for the loan before repayment kicks in. The range for this is decided by the loan product selected however customers can specify any value within that range. | NA |\n| `proposed_tenor_period` | `string` | This is the measurement of time that drives the proposed_tenor entered | days  <br>weeks  <br>months |\n| `gender` | `string` | male, female | male;  <br>female |\n| `marital_status` | `string` | The marital status of the user | married;  <br>single;  <br>divorced;  <br>separated;  <br>widowed |\n| `location` | `string` | The residential state of the user | States only:  <br>Lagos;  <br>Oyo etc. |\n| `no_of_dependent` | integer | 0, 5 | 0,  <br>5 etc. |\n| `type_of_residence` | `string` | The type of home residence the user lives in. There are currently three options | own house,  <br>rented apartment, parents apartment |\n| `education_attainment` | `string` | The highest level of eductaional attainment by the user. There are currently four options | MSc and above;  <br>BSc, HND and Other Equivalent;  <br>Diploma/School Cert; Others |\n| `employment_status` | `string` | The employment status of the user. There are currently four options | employed,  <br>self employed, unemployed,  <br>retired |\n| `bvn` | `string` | 22222222222 | NA |\n| `phone_number` | `string` | 0805555555 |  |\n| `working_period` | integer | 1 |  |\n| `time_with_current_employer` | integer | 1 |  |\n| `bvn_phone` | `string` | 08106666666 |  |\n| `official_email` | `string` | [male@female.com](https://) |  |\n| `personal_email` | `string` | [male@female.com](https://) |  |\n| `amount` | `string` | 5000 |  |"
+							},
+							"response": [
+								{
+									"name": "Initialize Loan Application (Without Meta [Success])",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"product_id\": \"p1r2o3d4u5c6c7t8i9d0\"\n    //\"meta\": {\n        //\"email\": \"testuser55@mailinator.com\",\n        //\"phone_number\": \"09081992341\"\n    //}\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{base_url}}loans/initialize",
+											"host": [
+												"{{base_url}}loans"
+											],
+											"path": [
+												"initialize"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Sun, 30 Jun 2024 17:38:19 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "X-Request-ID",
+											"value": "ca0edacd-9143-4b0d-9761-0488202c7170"
+										},
+										{
+											"key": "Last-Modified",
+											"value": "Sun, 30 Jun 2024 17:38:18 GMT"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"52-8okIIDk/Ap88bEHvo7zZmlMy2zQ\""
+										},
+										{
+											"key": "CF-Cache-Status",
+											"value": "DYNAMIC"
+										},
+										{
+											"key": "Server",
+											"value": "cloudflare"
+										},
+										{
+											"key": "CF-RAY",
+											"value": "89bfeddffb3c9563-LHR"
+										},
+										{
+											"key": "Content-Encoding",
+											"value": "gzip"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"success\",\n    \"message\": \"Successful\",\n    \"data\": {\n        \"url\": \"https://l.lsq.li/sTPC\"\n    }\n}"
+								},
+								{
+									"name": "Initialize Loan Application (Invalid Key)",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"product_id\": \"p1r2o3d4u5c6c7t8i9d0\",\n    \"meta\": {\n        \"email\": \"testuser55@mailinator.com\",\n        \"phone_number\": \"09081992341\"\n    }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{base_url}}loans/initialize",
+											"host": [
+												"{{base_url}}loans"
+											],
+											"path": [
+												"initialize"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Sun, 30 Jun 2024 17:36:51 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "42"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "X-Request-ID",
+											"value": "6978bcb6-320d-4087-b460-e6353df92bb0"
+										},
+										{
+											"key": "Last-Modified",
+											"value": "Sun, 30 Jun 2024 17:36:51 GMT"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"2a-n02miLSBBro76Fya54u/4BEuX9c\""
+										},
+										{
+											"key": "CF-Cache-Status",
+											"value": "DYNAMIC"
+										},
+										{
+											"key": "Server",
+											"value": "cloudflare"
+										},
+										{
+											"key": "CF-RAY",
+											"value": "89bfebc048ae9563-LHR"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"error\",\n    \"message\": \"Invalid Key\"\n}"
+								},
+								{
+									"name": "Initialize Loan Application (Without Product ID)",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    //\"product_id\": \"p1r2o3d4u5c6c7t8i9d0\",\n    \"meta\": {\n        \"email\": \"testuser55@mailinator.com\",\n        \"phone_number\": \"09081992341\"\n    }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{base_url}}loans/initialize",
+											"host": [
+												"{{base_url}}loans"
+											],
+											"path": [
+												"initialize"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Sun, 30 Jun 2024 17:37:28 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "42"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "X-Request-ID",
+											"value": "aebb7dae-2e67-44fe-8bb4-766662034742"
+										},
+										{
+											"key": "Last-Modified",
+											"value": "Sun, 30 Jun 2024 17:37:28 GMT"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"2a-n02miLSBBro76Fya54u/4BEuX9c\""
+										},
+										{
+											"key": "CF-Cache-Status",
+											"value": "DYNAMIC"
+										},
+										{
+											"key": "Server",
+											"value": "cloudflare"
+										},
+										{
+											"key": "CF-RAY",
+											"value": "89bfeca55e7f9563-LHR"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"error\",\n    \"message\": \"Invalid Key\"\n}"
+								}
+							]
+						}
+					],
+					"description": "Embedded loans allows you as a third-party to offer loan services to your customers on your platform without having to be a lender yourself.\n\nThese loans offered are typically powered by the lenders on the Lendsqr platform.\n\nIt is possible that you may have a single relationship with just one lender or want to opt in for loan services from all lenders that allow such on our platform.\n\nThese details would be established after your account has been set up with us.",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				}
+			],
+			"description": "Endpoints for Loan servicing"
+		},
+		{
+			"name": "Data for Lenders",
+			"item": [
+				{
+					"name": "Options",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json();\r",
+									"\r",
+									"pm.test(\"HTTP Status code is as expected\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response Message is as expected\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"success\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}data/options",
+							"host": [
+								"{{base_url}}data"
+							],
+							"path": [
+								"options"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Options (Success)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}data/options",
+									"host": [
+										"{{base_url}}data"
+									],
+									"path": [
+										"options"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 30 Jun 2024 17:44:53 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "X-Request-ID",
+									"value": "ed101fd0-6d0c-42ff-85e4-5e9ab63ffb40"
+								},
+								{
+									"key": "Last-Modified",
+									"value": "Sun, 30 Jun 2024 17:44:53 GMT"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"452-pzz6lGcAe/herZmse0s2661YzhI\""
+								},
+								{
+									"key": "CF-Cache-Status",
+									"value": "DYNAMIC"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "89bff7831aa052dc-LHR"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"data\": [\n        {\n            \"name\": \"Loan analytics\",\n            \"description\": \"Analytics of loans for organization grouped by month. You can filter with the month column\",\n            \"path\": \"/analytics/loans\"\n        },\n        {\n            \"name\": \"Loans\",\n            \"description\": \"Get details of all loans for any users. You can filter with user_id, status, and approved_on columns\",\n            \"path\": \"/loans\"\n        },\n        {\n            \"name\": \"Loans\",\n            \"description\": \"Get transactions for loans. You can filter data using the loan_id and created_on columns\",\n            \"path\": \"/loans/transactions\"\n        },\n        {\n            \"name\": \"Loans\",\n            \"description\": \"Get schedules for specific loans. You can filter data using the loan_id and created_on columns\",\n            \"path\": \"/loans/schedules\"\n        },\n        {\n            \"name\": \"Options\",\n            \"description\": \"List all available data options. To get the data for any path, please call with base_url/<path>\",\n            \"path\": \"/options\"\n        },\n        {\n            \"name\": \"Transactions\",\n            \"description\": \"Get details of all user transactions. You can filter data using the user_id column\",\n            \"path\": \"/transactions\"\n        },\n        {\n            \"name\": \"Users\",\n            \"description\": \"Get details of all users that have signed up to the system. This may include users who have not completed their onboarding\",\n            \"path\": \"/users\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json();\r",
+									"\r",
+									"pm.test(\"HTTP Status code is as expected\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response Message is as expected\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"success\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}data/users",
+							"host": [
+								"{{base_url}}data"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Users (Success)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}data/users",
+									"host": [
+										"{{base_url}}data"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 30 Jun 2024 17:45:15 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "26"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "X-Request-ID",
+									"value": "7b4c42da-b453-42ab-a925-6ca278459a58"
+								},
+								{
+									"key": "Last-Modified",
+									"value": "Sun, 30 Jun 2024 17:45:15 GMT"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1a-s3B6blipWxCo2IriQlJeaz0uh7I\""
+								},
+								{
+									"key": "CF-Cache-Status",
+									"value": "DYNAMIC"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "89bff80ed90052dc-LHR"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"data\": []\n}"
+						}
+					]
+				}
+			],
+			"description": "Endpoints for Lenders and Lender's customer data"
+		},
+		{
+			"name": "Operational Services",
+			"item": [
+				{
+					"name": "Profile",
+					"item": [
+						{
+							"name": "Get Adjutor Services Pricing",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const responseJson = pm.response.json();\r",
+											"\r",
+											"pm.test(\"HTTP Status code is as expected\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response Message is as expected\", function () {\r",
+											"    pm.expect(responseJson.message).to.equal(\"Successful\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"The rest of the Response Body is as expected\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"success\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}profile/pricing",
+									"host": [
+										"{{base_url}}profile"
+									],
+									"path": [
+										"pricing"
+									]
+								},
+								"description": "This endpoint is used to obtain the current pricing of the API services. Kindly note that pricing may be different from lender to lender due to commercial negotiations that could have provide some lenders with a different pricing due to volume commitment.\n\nIf you want a cheaper price, which usually comes with a minimum monthly spend, please contact your account manager at growth@lendsqr.com."
+							},
+							"response": [
+								{
+									"name": "Get Adjutor Services Pricing (Success)",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{base_url}}profile/pricing",
+											"host": [
+												"{{base_url}}profile"
+											],
+											"path": [
+												"pricing"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Sun, 30 Jun 2024 17:45:49 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "X-Request-ID",
+											"value": "c60429f0-3249-473f-a5dd-6d5d7a59b193"
+										},
+										{
+											"key": "Last-Modified",
+											"value": "Sun, 30 Jun 2024 17:45:46 GMT"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"35-8BoRs039pR2Xgs7wDkDyVgMY+E8\""
+										},
+										{
+											"key": "CF-Cache-Status",
+											"value": "DYNAMIC"
+										},
+										{
+											"key": "Server",
+											"value": "cloudflare"
+										},
+										{
+											"key": "CF-RAY",
+											"value": "89bff8d0ffae52dc-LHR"
+										},
+										{
+											"key": "Content-Encoding",
+											"value": "gzip"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"success\",\n    \"message\": \"Successful\",\n    \"data\": []\n}"
+								}
+							]
+						},
+						{
+							"name": "Get Wallet",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const responseJson = pm.response.json();\r",
+											"\r",
+											"pm.test(\"HTTP Status code is as expected\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response Message is as expected\", function () {\r",
+											"    pm.expect(responseJson.message).to.equal(\"Successful\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"The rest of the Response Body is as expected\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"success\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}profile/wallet",
+									"host": [
+										"{{base_url}}profile"
+									],
+									"path": [
+										"wallet"
+									]
+								},
+								"description": "This request is used to obtain the wallet information on the lender's profile."
+							},
+							"response": [
+								{
+									"name": "Get Wallet (Success)",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{base_url}}profile/wallet",
+											"host": [
+												"{{base_url}}profile"
+											],
+											"path": [
+												"wallet"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Sun, 30 Jun 2024 17:46:12 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "X-Request-ID",
+											"value": "726bfa66-c9f6-4a7f-b338-be1663271f6d"
+										},
+										{
+											"key": "Last-Modified",
+											"value": "Sun, 30 Jun 2024 17:46:11 GMT"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"42-4HU7y5kYbC2ZsXNQXNwbD2wPags\""
+										},
+										{
+											"key": "CF-Cache-Status",
+											"value": "DYNAMIC"
+										},
+										{
+											"key": "Server",
+											"value": "cloudflare"
+										},
+										{
+											"key": "CF-RAY",
+											"value": "89bff96fbe7652dc-LHR"
+										},
+										{
+											"key": "Content-Encoding",
+											"value": "gzip"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"success\",\n    \"message\": \"Successful\",\n    \"data\": {\n        \"balance\": 420\n    }\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Miscellanous",
+					"item": [
+						{
+							"name": "Get List of Banks",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const responseJson = pm.response.json();\r",
+											"\r",
+											"pm.test(\"HTTP Status code is as expected\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response Message is as expected\", function () {\r",
+											"    pm.expect(responseJson.message).to.equal(\"Successful\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"The rest of the Response Body is as expected\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"success\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}misc/banks",
+									"host": [
+										"{{base_url}}misc"
+									],
+									"path": [
+										"banks"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Get List of Banks (Success)",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{base_url}}misc/banks",
+											"host": [
+												"{{base_url}}misc"
+											],
+											"path": [
+												"banks"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Sun, 30 Jun 2024 17:46:43 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "X-Request-ID",
+											"value": "1dec09cd-f95e-473c-bd10-6952fe57af99"
+										},
+										{
+											"key": "Last-Modified",
+											"value": "Sun, 30 Jun 2024 17:46:43 GMT"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"dca-DpIW42nUBdDd4MSBLpElLdQbne8\""
+										},
+										{
+											"key": "CF-Cache-Status",
+											"value": "DYNAMIC"
+										},
+										{
+											"key": "Server",
+											"value": "cloudflare"
+										},
+										{
+											"key": "CF-RAY",
+											"value": "89bffa366b8352dc-LHR"
+										},
+										{
+											"key": "Content-Encoding",
+											"value": "gzip"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"success\",\n    \"message\": \"Successful\",\n    \"data\": [\n        {\n            \"name\": \"3line\",\n            \"shortcode\": \"110005\",\n            \"longcode\": \"110005\"\n        },\n        {\n            \"name\": \"Access Bank\",\n            \"shortcode\": \"044\",\n            \"longcode\": \"000014\"\n        },\n        {\n            \"name\": \"Alat by Wema\",\n            \"shortcode\": \"035\",\n            \"longcode\": \"000017\"\n        },\n        {\n            \"name\": \"ASO Savings and Loans\",\n            \"shortcode\": \"401\",\n            \"longcode\": \"090001\"\n        },\n        {\n            \"name\": \"Bankly MFB\",\n            \"shortcode\": \"\",\n            \"longcode\": \"090529\"\n        },\n        {\n            \"name\": \"Carbon\",\n            \"shortcode\": \"565\",\n            \"longcode\": \"100026\"\n        },\n        {\n            \"name\": \"CEMCS Microfinance Bank\",\n            \"shortcode\": \"50823\",\n            \"longcode\": \"090154\"\n        },\n        {\n            \"name\": \"Citibank Nigeria\",\n            \"shortcode\": \"023\",\n            \"longcode\": \"000009\"\n        },\n        {\n            \"name\": \"Coronation Merchant Bank\",\n            \"shortcode\": \"946\",\n            \"longcode\": \"060001\"\n        },\n        {\n            \"name\": \"Coronation Merchant Bank\",\n            \"shortcode\": \"559\",\n            \"longcode\": \"060001\"\n        },\n        {\n            \"name\": \"Dot pay\",\n            \"shortcode\": \"090470\",\n            \"longcode\": \"090470\"\n        },\n        {\n            \"name\": \"Ecobank Nigeria\",\n            \"shortcode\": \"050\",\n            \"longcode\": \"000010\"\n        },\n        {\n            \"name\": \"Ekondo Microfinance Bank\",\n            \"shortcode\": \"562\",\n            \"longcode\": \"090097\"\n        },\n        {\n            \"name\": \"Fairmoney MFB\",\n            \"shortcode\": \"090551\",\n            \"longcode\": \"090551\"\n        },\n        {\n            \"name\": \"FBNQuest Merchant Bank\",\n            \"shortcode\": \"911\",\n            \"longcode\": \"060002\"\n        },\n        {\n            \"name\": \"Fidelity Bank\",\n            \"shortcode\": \"070\",\n            \"longcode\": \"000007\"\n        },\n        {\n            \"name\": \"Firmus MFB\",\n            \"shortcode\": \"51314\",\n            \"longcode\": \"090366\"\n        },\n        {\n            \"name\": \"First Bank of Nigeria\",\n            \"shortcode\": \"011\",\n            \"longcode\": \"000016\"\n        },\n        {\n            \"name\": \"First City Monument Bank\",\n            \"shortcode\": \"214\",\n            \"longcode\": \"000003\"\n        },\n        {\n            \"name\": \"FSDH Merchant Bank\",\n            \"shortcode\": \"501\",\n            \"longcode\": \"400001\"\n        },\n        {\n            \"name\": \"Globus Bank\",\n            \"shortcode\": \"103\",\n            \"longcode\": \"000027\"\n        },\n        {\n            \"name\": \"Guaranty Trust Bank\",\n            \"shortcode\": \"058\",\n            \"longcode\": \"000013\"\n        },\n        {\n            \"name\": \"Hasal Microfinance Bank\",\n            \"shortcode\": \"50383\",\n            \"longcode\": \"090121\"\n        },\n        {\n            \"name\": \"Jaiz Bank\",\n            \"shortcode\": \"301\",\n            \"longcode\": \"000006\"\n        },\n        {\n            \"name\": \"Keystone Bank\",\n            \"shortcode\": \"082\",\n            \"longcode\": \"000002\"\n        },\n        {\n            \"name\": \"Kredi Bank\",\n            \"shortcode\": \"50200\",\n            \"longcode\": \"090380\"\n        },\n        {\n            \"name\": \"Kuda Bank\",\n            \"shortcode\": \"50211\",\n            \"longcode\": \"090267\"\n        },\n        {\n            \"name\": \"Lotus Bank\",\n            \"shortcode\": \"000029\",\n            \"longcode\": \"000029\"\n        },\n        {\n            \"name\": \"MoniePoint Bank\",\n            \"shortcode\": \"50515\",\n            \"longcode\": \"090405\"\n        },\n        {\n            \"name\": \"Nova Merchant Bank\",\n            \"shortcode\": \"561\",\n            \"longcode\": \"060003\"\n        },\n        {\n            \"name\": \"One Finance\",\n            \"shortcode\": \"565\",\n            \"longcode\": \"100026\"\n        },\n        {\n            \"name\": \"Parallex Bank\",\n            \"shortcode\": \"526\",\n            \"longcode\": \"090004\"\n        },\n        {\n            \"name\": \"Paystack-Titan\",\n            \"shortcode\": \"100039\",\n            \"longcode\": \"100039\"\n        },\n        {\n            \"name\": \"Polaris Bank\",\n            \"shortcode\": \"076\",\n            \"longcode\": \"000008\"\n        },\n        {\n            \"name\": \"Premium Trust Bank\",\n            \"shortcode\": \"105\",\n            \"longcode\": \"000031\"\n        },\n        {\n            \"name\": \"Providus Bank\",\n            \"shortcode\": \"101\",\n            \"longcode\": \"000023\"\n        },\n        {\n            \"name\": \"Rand Merchant Bank Nigeria\",\n            \"shortcode\": \"502\",\n            \"longcode\": \"000024\"\n        },\n        {\n            \"name\": \"Rubies MFB\",\n            \"shortcode\": \"125\",\n            \"longcode\": \"090175\"\n        },\n        {\n            \"name\": \"Sparkle Bank\",\n            \"shortcode\": \"51310\",\n            \"longcode\": \"090325\"\n        },\n        {\n            \"name\": \"Stanbic IBTC Bank\",\n            \"shortcode\": \"221\",\n            \"longcode\": \"000012\"\n        },\n        {\n            \"name\": \"Standard Chartered Bank\",\n            \"shortcode\": \"068\",\n            \"longcode\": \"000021\"\n        },\n        {\n            \"name\": \"Sterling Bank\",\n            \"shortcode\": \"232\",\n            \"longcode\": \"000001\"\n        },\n        {\n            \"name\": \"Suntrust Bank\",\n            \"shortcode\": \"100\",\n            \"longcode\": \"000022\"\n        },\n        {\n            \"name\": \"Support MFB\",\n            \"shortcode\": \"295\",\n            \"longcode\": \"50812\"\n        },\n        {\n            \"name\": \"TAJ Bank\",\n            \"shortcode\": \"302\",\n            \"longcode\": \"000026\"\n        },\n        {\n            \"name\": \"TCF MFB\",\n            \"shortcode\": \"51211\",\n            \"longcode\": \"090115\"\n        },\n        {\n            \"name\": \"Titan Trust Bank\",\n            \"shortcode\": \"102\",\n            \"longcode\": \"000025\"\n        },\n        {\n            \"name\": \"Union Bank of Nigeria\",\n            \"shortcode\": \"032\",\n            \"longcode\": \"000018\"\n        },\n        {\n            \"name\": \"United Bank For Africa\",\n            \"shortcode\": \"033\",\n            \"longcode\": \"000004\"\n        },\n        {\n            \"name\": \"Unity Bank\",\n            \"shortcode\": \"215\",\n            \"longcode\": \"000011\"\n        },\n        {\n            \"name\": \"VFD\",\n            \"shortcode\": \"566\",\n            \"longcode\": \"090110\"\n        },\n        {\n            \"name\": \"Wema Bank\",\n            \"shortcode\": \"035\",\n            \"longcode\": \"000017\"\n        },\n        {\n            \"name\": \"Zenith Bank\",\n            \"shortcode\": \"057\",\n            \"longcode\": \"000015\"\n        }\n    ],\n    \"meta\": {\n        \"cost\": 0,\n        \"balance\": 420\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Get Status Check",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const responseJson = pm.response.json();\r",
+											"\r",
+											"pm.test(\"HTTP Status code is as expected\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response Message is as expected\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"success\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status is as expected\", function () {\r",
+											"    pm.expect(responseJson.status).to.equal(true);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}status",
+									"host": [
+										"{{base_url}}status"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Get Status Check (Success)",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{base_url}}status",
+											"host": [
+												"{{base_url}}status"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Sun, 30 Jun 2024 17:47:03 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "X-Request-ID",
+											"value": "006f6675-8f53-41e7-b14f-f76d965e1755"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"93f-7zJZHEVckSsfNca+rCjImmdAfHE\""
+										},
+										{
+											"key": "CF-Cache-Status",
+											"value": "DYNAMIC"
+										},
+										{
+											"key": "Server",
+											"value": "cloudflare"
+										},
+										{
+											"key": "CF-RAY",
+											"value": "89bffaabfa9052dc-LHR"
+										},
+										{
+											"key": "Content-Encoding",
+											"value": "gzip"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": true,\n    \"data\": [\n        {\n            \"service\": \"adjutor-oraculi-scoring\",\n            \"success\": true\n        },\n        {\n            \"service\": \"adjutor-name-inquiry\",\n            \"success\": false\n        },\n        {\n            \"service\": \"adjutor-name-inquiry-bvn\",\n            \"success\": false\n        },\n        {\n            \"service\": \"adjutor-karma-lookup\",\n            \"success\": true\n        },\n        {\n            \"service\": \"adjutor-bvn-verification\",\n            \"success\": false\n        },\n        {\n            \"service\": \"adjutor-image-compare\",\n            \"success\": true\n        },\n        {\n            \"service\": \"adjutor-ecosystem-lookup\",\n            \"success\": true\n        },\n        {\n            \"service\": \"adjutor-bank-list\",\n            \"success\": true\n        },\n        {\n            \"service\": \"adjutor-crc\",\n            \"success\": false\n        },\n        {\n            \"service\": \"adjutor-firstcentral\",\n            \"success\": false\n        },\n        {\n            \"service\": \"adjutor-credit-registry\",\n            \"success\": false\n        },\n        {\n            \"service\": \"adjutor-oraculi-accounts\",\n            \"success\": true\n        },\n        {\n            \"service\": \"adjutor-oraculi-statement\",\n            \"success\": true\n        },\n        {\n            \"service\": \"adjutor-oraculi-analytics\",\n            \"success\": true\n        },\n        {\n            \"service\": \"adjutor-oraculi-models\",\n            \"success\": true\n        },\n        {\n            \"service\": \"adjutor-bvn-initialize\",\n            \"success\": false\n        },\n        {\n            \"service\": \"adjutor-bvn-complete\",\n            \"success\": false\n        },\n        {\n            \"service\": \"adjutor-bvn-accounts-initialize\",\n            \"success\": false\n        },\n        {\n            \"service\": \"adjutor-bvn-accounts-complete\",\n            \"success\": false\n        },\n        {\n            \"service\": \"adjutor-direct-debit\",\n            \"success\": false\n        },\n        {\n            \"service\": \"adjutor-direct-debit-list-banks\",\n            \"success\": false\n        },\n        {\n            \"service\": \"adjutor-direct-debit-account-lookup\",\n            \"success\": false\n        },\n        {\n            \"service\": \"adjutor-direct-debit-balance-lookup\",\n            \"success\": false\n        },\n        {\n            \"service\": \"adjutor-direct-debit-create-mandate\",\n            \"success\": false\n        },\n        {\n            \"service\": \"adjutor-direct-debit-list-mandates\",\n            \"success\": false\n        },\n        {\n            \"service\": \"adjutor-direct-debit-update-mandate\",\n            \"success\": false\n        },\n        {\n            \"service\": \"adjutor-direct-debit-debit-mandate\",\n            \"success\": false\n        },\n        {\n            \"service\": \"adjutor-direct-debit-list-transactions\",\n            \"success\": false\n        },\n        {\n            \"service\": \"adjutor-direct-debit-create-biller\",\n            \"success\": false\n        },\n        {\n            \"service\": \"adjutor-direct-debit-list-billers\",\n            \"success\": false\n        },\n        {\n            \"service\": \"adjutor-direct-debit-mandate-debit\",\n            \"success\": false\n        },\n        {\n            \"service\": \"adjutor-direct-debit-generate-form\",\n            \"success\": false\n        },\n        {\n            \"service\": \"adjutor-kolo-auth\",\n            \"success\": true\n        },\n        {\n            \"service\": \"adjutor-kolo-view-transactions\",\n            \"success\": true\n        },\n        {\n            \"service\": \"adjutor-kolo-update-transactions\",\n            \"success\": true\n        },\n        {\n            \"service\": \"adjutor-kolo-view-profile\",\n            \"success\": true\n        },\n        {\n            \"service\": \"adjutor-kolo-view-accounts\",\n            \"success\": true\n        },\n        {\n            \"service\": \"adjutor-kolo-add-account\",\n            \"success\": true\n        },\n        {\n            \"service\": \"adjutor-kolo-sync-account\",\n            \"success\": true\n        },\n        {\n            \"service\": \"adjutor-kolo-update-account\",\n            \"success\": true\n        },\n        {\n            \"service\": \"adjutor-kolo-delete-account\",\n            \"success\": true\n        }\n    ]\n}"
+								}
+							]
+						}
+					]
+				}
+			],
+			"description": "Endpoints for Lender's information on Lendsqr"
+		},
+		{
+			"name": "Direct Debit",
+			"item": [
+				{
+					"name": "Banks",
+					"item": [
+						{
+							"name": "Get All Banks",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const responseJson = pm.response.json();\r",
+											"\r",
+											"pm.test(\"HTTP Status code is as expected\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response Message is as expected\", function () {\r",
+											"    pm.expect(responseJson.message).to.equal(\"success\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"The rest of the Response Body is as expected\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"success\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}direct-debit/banks?limit=100&page=1&sort_dir=ASC",
+									"host": [
+										"{{base_url}}direct-debit"
+									],
+									"path": [
+										"banks"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "100"
+										},
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "sort_dir",
+											"value": "ASC"
+										}
+									]
+								},
+								"description": "This endpoints returns the lis of banks able to provide direct debit authorizations on their customers' accounts.\n\n#### Response Body Fields\n\n| Field | Type | Description |\n| --- | --- | --- |\n| id | `Integer` | Unique identifier for the bank. |\n| name | `string` | Name of the bank. |\n| bank_code | `string` | This is the CBN code associated with the bank. It is usually 3 digits for commercial banks and 5 digits for microfinance banks. |\n| institution_code | `string` | This is the NIBSS code associated with the bank. It is is usually 6 digits long. For commercial banks, the code is in the format 0000XX where X is from 0 to 99. |\n| url | `string` | URL pointing to the bank's logo or image. |"
+							},
+							"response": [
+								{
+									"name": "Get All Banks (Success)",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{base_url}}direct-debit/banks?limit=100&page=1&sort_dir=ASC",
+											"host": [
+												"{{base_url}}direct-debit"
+											],
+											"path": [
+												"banks"
+											],
+											"query": [
+												{
+													"key": "limit",
+													"value": "100"
+												},
+												{
+													"key": "page",
+													"value": "1"
+												},
+												{
+													"key": "sort_dir",
+													"value": "ASC"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Sun, 30 Jun 2024 17:47:37 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "X-Request-ID",
+											"value": "2fd9ba7b-181e-4b1e-80d0-71c8f6b16e86"
+										},
+										{
+											"key": "Last-Modified",
+											"value": "Sun, 30 Jun 2024 17:47:37 GMT"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"18fa-hG+Q7V2XC0foHsdlK1r7f6NHf6k\""
+										},
+										{
+											"key": "CF-Cache-Status",
+											"value": "DYNAMIC"
+										},
+										{
+											"key": "Server",
+											"value": "cloudflare"
+										},
+										{
+											"key": "CF-RAY",
+											"value": "89bffb840f7352dc-LHR"
+										},
+										{
+											"key": "Content-Encoding",
+											"value": "gzip"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"success\",\n    \"message\": \"success\",\n    \"data\": {\n        \"data\": [\n            {\n                \"id\": 1,\n                \"name\": \"Access Bank\",\n                \"bank_code\": \"044\",\n                \"institution_code\": \"000014\",\n                \"url\": \"https://lendstack-s3.s3.us-east-2.amazonaws.com/bank_logos/044.png\",\n                \"activation_amount\": \"50.00\",\n                \"meta\": \"{\\\"mandate-activation-amount\\\":50,\\\"mandate-activation-bank\\\":\\\"Paystack-Titan\\\",\\\"mandate-activation-account-number\\\":\\\"9880218357\\\"}\"\n            },\n            {\n                \"id\": 7,\n                \"name\": \"Ecobank Nigeria\",\n                \"bank_code\": \"050\",\n                \"institution_code\": \"000010\",\n                \"url\": \"https://lendstack-s3.s3.us-east-2.amazonaws.com/bank_logos/050.png\",\n                \"activation_amount\": \"50.00\",\n                \"meta\": \"{\\\"mandate-activation-amount\\\":50,\\\"mandate-activation-bank\\\":\\\"Paystack-Titan\\\",\\\"mandate-activation-account-number\\\":\\\"9880218357\\\"}\"\n            },\n            {\n                \"id\": 11,\n                \"name\": \"Fidelity Bank\",\n                \"bank_code\": \"070\",\n                \"institution_code\": \"000007\",\n                \"url\": \"https://lendstack-s3.s3.us-east-2.amazonaws.com/bank_logos/070.png\",\n                \"activation_amount\": \"50.00\",\n                \"meta\": \"{\\\"mandate-activation-amount\\\":50,\\\"mandate-activation-bank\\\":\\\"Paystack-Titan\\\",\\\"mandate-activation-account-number\\\":\\\"9880218357\\\"}\"\n            },\n            {\n                \"id\": 10,\n                \"name\": \"First Bank of Nigeria\",\n                \"bank_code\": \"011\",\n                \"institution_code\": \"000016\",\n                \"url\": \"https://lendstack-s3.s3.us-east-2.amazonaws.com/bank_logos/011.png\",\n                \"activation_amount\": \"50.00\",\n                \"meta\": \"{\\\"mandate-activation-amount\\\":50,\\\"mandate-activation-bank\\\":\\\"Paystack-Titan\\\",\\\"mandate-activation-account-number\\\":\\\"9880218357\\\"}\"\n            },\n            {\n                \"id\": 12,\n                \"name\": \"First City Monument Bank\",\n                \"bank_code\": \"214\",\n                \"institution_code\": \"000003\",\n                \"url\": \"https://lendstack-s3.s3.us-east-2.amazonaws.com/bank_logos/214.png\",\n                \"activation_amount\": \"50.00\",\n                \"meta\": \"{\\\"mandate-activation-amount\\\":50,\\\"mandate-activation-bank\\\":\\\"Paystack-Titan\\\",\\\"mandate-activation-account-number\\\":\\\"9880218357\\\"}\"\n            },\n            {\n                \"id\": 16,\n                \"name\": \"Guaranty Trust Bank\",\n                \"bank_code\": \"058\",\n                \"institution_code\": \"000013\",\n                \"url\": \"https://lendstack-s3.s3.us-east-2.amazonaws.com/bank_logos/058.png\",\n                \"activation_amount\": \"50.00\",\n                \"meta\": \"{\\\"mandate-activation-amount\\\":50,\\\"mandate-activation-bank\\\":\\\"Paystack-Titan\\\",\\\"mandate-activation-account-number\\\":\\\"9880218357\\\"}\"\n            },\n            {\n                \"id\": 18,\n                \"name\": \"Keystone Bank\",\n                \"bank_code\": \"082\",\n                \"institution_code\": \"000002\",\n                \"url\": \"https://lendstack-s3.s3.us-east-2.amazonaws.com/bank_logos/082.png\",\n                \"activation_amount\": \"50.00\",\n                \"meta\": \"{\\\"mandate-activation-amount\\\":50,\\\"mandate-activation-bank\\\":\\\"Paystack-Titan\\\",\\\"mandate-activation-account-number\\\":\\\"9880218357\\\"}\"\n            },\n            {\n                \"id\": 22,\n                \"name\": \"Kuda Bank\",\n                \"bank_code\": \"50211\",\n                \"institution_code\": \"090267\",\n                \"url\": \"https://lendstack-s3.s3.us-east-2.amazonaws.com/bank_logos/50211.png\",\n                \"activation_amount\": \"50.00\",\n                \"meta\": \"{\\\"mandate-activation-amount\\\":50,\\\"mandate-activation-bank\\\":\\\"Paystack-Titan\\\",\\\"mandate-activation-account-number\\\":\\\"9880218357\\\"}\"\n            },\n            {\n                \"id\": 25,\n                \"name\": \"Polaris Bank\",\n                \"bank_code\": \"076\",\n                \"institution_code\": \"000008\",\n                \"url\": \"https://lendstack-s3.s3.us-east-2.amazonaws.com/bank_logos/076.png\",\n                \"activation_amount\": \"50.00\",\n                \"meta\": \"{\\\"mandate-activation-amount\\\":50,\\\"mandate-activation-bank\\\":\\\"Paystack-Titan\\\",\\\"mandate-activation-account-number\\\":\\\"9880218357\\\"}\"\n            },\n            {\n                \"id\": 24,\n                \"name\": \"Providus Bank\",\n                \"bank_code\": \"101\",\n                \"institution_code\": \"000023\",\n                \"url\": \"https://lendstack-s3.s3.us-east-2.amazonaws.com/bank_logos/101.png\",\n                \"activation_amount\": \"50.00\",\n                \"meta\": \"{\\\"mandate-activation-amount\\\":50,\\\"mandate-activation-bank\\\":\\\"Paystack-Titan\\\",\\\"mandate-activation-account-number\\\":\\\"9880218357\\\"}\"\n            },\n            {\n                \"id\": 27,\n                \"name\": \"Stanbic IBTC Bank\",\n                \"bank_code\": \"221\",\n                \"institution_code\": \"000012\",\n                \"url\": \"https://lendstack-s3.s3.us-east-2.amazonaws.com/bank_logos/221.png\",\n                \"activation_amount\": \"50.00\",\n                \"meta\": \"{\\\"mandate-activation-amount\\\":50,\\\"mandate-activation-bank\\\":\\\"Paystack-Titan\\\",\\\"mandate-activation-account-number\\\":\\\"9880218357\\\"}\"\n            },\n            {\n                \"id\": 28,\n                \"name\": \"Standard Chartered Bank\",\n                \"bank_code\": \"068\",\n                \"institution_code\": \"000021\",\n                \"url\": \"https://lendstack-s3.s3.us-east-2.amazonaws.com/bank_logos/068.png\",\n                \"activation_amount\": \"100.00\",\n                \"meta\": \"{\\\"mandate-activation-amount\\\":100,\\\"mandate-activation-bank\\\":\\\"Paystack-Titan\\\",\\\"mandate-activation-account-number\\\":\\\"9880218357\\\"}\"\n            },\n            {\n                \"id\": 29,\n                \"name\": \"Sterling Bank\",\n                \"bank_code\": \"232\",\n                \"institution_code\": \"000001\",\n                \"url\": \"https://lendstack-s3.s3.us-east-2.amazonaws.com/bank_logos/232.png\",\n                \"activation_amount\": \"50.00\",\n                \"meta\": \"{\\\"mandate-activation-amount\\\":50,\\\"mandate-activation-bank\\\":\\\"Paystack-Titan\\\",\\\"mandate-activation-account-number\\\":\\\"9880218357\\\"}\"\n            },\n            {\n                \"id\": 34,\n                \"name\": \"Suntrust Bank\",\n                \"bank_code\": \"100\",\n                \"institution_code\": \"000022\",\n                \"url\": \"https://lendstack-s3.s3.us-east-2.amazonaws.com/bank_logos/100.png\",\n                \"activation_amount\": \"50.00\",\n                \"meta\": \"{\\\"mandate-activation-amount\\\":50,\\\"mandate-activation-bank\\\":\\\"Paystack-Titan\\\",\\\"mandate-activation-account-number\\\":\\\"9880218357\\\"}\"\n            },\n            {\n                \"id\": 36,\n                \"name\": \"Union Bank of Nigeria\",\n                \"bank_code\": \"032\",\n                \"institution_code\": \"000018\",\n                \"url\": \"https://lendstack-s3.s3.us-east-2.amazonaws.com/bank_logos/032.png\",\n                \"activation_amount\": \"100.00\",\n                \"meta\": \"{\\\"mandate-activation-amount\\\":100,\\\"mandate-activation-bank\\\":\\\"Paystack-Titan\\\",\\\"mandate-activation-account-number\\\":\\\"9880218357\\\"}\"\n            },\n            {\n                \"id\": 40,\n                \"name\": \"United Bank For Africa\",\n                \"bank_code\": \"033\",\n                \"institution_code\": \"000004\",\n                \"url\": \"https://lendstack-s3.s3.us-east-2.amazonaws.com/bank_logos/033.png\",\n                \"activation_amount\": \"50.00\",\n                \"meta\": \"{\\\"mandate-activation-amount\\\":50,\\\"mandate-activation-bank\\\":\\\"Paystack-Titan\\\",\\\"mandate-activation-account-number\\\":\\\"9880218357\\\"}\"\n            },\n            {\n                \"id\": 37,\n                \"name\": \"Unity Bank\",\n                \"bank_code\": \"215\",\n                \"institution_code\": \"000011\",\n                \"url\": \"https://lendstack-s3.s3.us-east-2.amazonaws.com/bank_logos/215.png\",\n                \"activation_amount\": \"100.00\",\n                \"meta\": \"{\\\"mandate-activation-amount\\\":100,\\\"mandate-activation-bank\\\":\\\"Paystack-Titan\\\",\\\"mandate-activation-account-number\\\":\\\"9880218357\\\"}\"\n            },\n            {\n                \"id\": 2,\n                \"name\": \"Wema Bank\",\n                \"bank_code\": \"035\",\n                \"institution_code\": \"000017\",\n                \"url\": \"https://lendstack-s3.s3.us-east-2.amazonaws.com/bank_logos/035.png\",\n                \"activation_amount\": \"50.00\",\n                \"meta\": \"{\\\"mandate-activation-amount\\\":50,\\\"mandate-activation-bank\\\":\\\"Paystack-Titan\\\",\\\"mandate-activation-account-number\\\":\\\"9880218357\\\"}\"\n            },\n            {\n                \"id\": 41,\n                \"name\": \"Zenith Bank\",\n                \"bank_code\": \"057\",\n                \"institution_code\": \"000015\",\n                \"url\": \"https://lendstack-s3.s3.us-east-2.amazonaws.com/bank_logos/057.png\",\n                \"activation_amount\": \"50.00\",\n                \"meta\": \"{\\\"mandate-activation-amount\\\":50,\\\"mandate-activation-bank\\\":\\\"Paystack-Titan\\\",\\\"mandate-activation-account-number\\\":\\\"9880218357\\\"}\"\n            }\n        ],\n        \"meta\": {\n            \"records\": 19,\n            \"page\": \"1\",\n            \"pages\": 1,\n            \"page_size\": \"100\"\n        }\n    },\n    \"meta\": {\n        \"cost\": 0,\n        \"balance\": 420\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Get Details of a Bank",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const responseJson = pm.response.json();\r",
+											"\r",
+											"pm.test(\"HTTP Status code is as expected\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response Message is as expected\", function () {\r",
+											"    pm.expect(responseJson.message).to.equal(\"success\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"The rest of the Response Body is as expected\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"success\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}direct-debit/banks/:bank_id",
+									"host": [
+										"{{base_url}}direct-debit"
+									],
+									"path": [
+										"banks",
+										":bank_id"
+									],
+									"variable": [
+										{
+											"key": "bank_id",
+											"value": "{{bank_id}}"
+										}
+									]
+								},
+								"description": "Retrieve the details of a specific account.\n\n#### Query Params\n\n| Field | Type | Description |\n| --- | --- | --- |\n| bank_id | `Integer` | **Required**. The ID of the bank you want to get the details of. |\n\n#### Response Body Field\n\n| Field | Type | Description |\n| --- | --- | --- |\n| status | `string` | The status of the response. |\n| message | `string` | A message indicating the result of the operation. |\n| data | `object` | The data object contains specific information related to the response. |\n| ID | `number` | The ID associated with the bank. |\n| bank | `string` | The name of the bank. |\n| bank_code | `string` | The bank code associated with the bank. |\n| institutional_code | `string` | The institution code associated with the bank. |\n| url | `string` | The URL pointing to the bank's logo image |"
+							},
+							"response": [
+								{
+									"name": "Get Details of a Bank (Success)",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{base_url}}direct-debit/banks/:bank_id",
+											"host": [
+												"{{base_url}}direct-debit"
+											],
+											"path": [
+												"banks",
+												":bank_id"
+											],
+											"variable": [
+												{
+													"key": "bank_id",
+													"value": "{{bank_id}}"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Sun, 30 Jun 2024 17:47:57 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "X-Request-ID",
+											"value": "fc051580-c418-4de2-8e24-5ced3e8a12b1"
+										},
+										{
+											"key": "Last-Modified",
+											"value": "Sun, 30 Jun 2024 17:47:56 GMT"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"193-2QfmZ/nFPdR/NRxVdlixxBLupf4\""
+										},
+										{
+											"key": "CF-Cache-Status",
+											"value": "DYNAMIC"
+										},
+										{
+											"key": "Server",
+											"value": "cloudflare"
+										},
+										{
+											"key": "CF-RAY",
+											"value": "89bffbfd2a8552dc-LHR"
+										},
+										{
+											"key": "Content-Encoding",
+											"value": "gzip"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"success\",\n    \"message\": \"success\",\n    \"data\": {\n        \"id\": 41,\n        \"name\": \"Zenith Bank\",\n        \"bank_code\": \"057\",\n        \"institution_code\": \"000015\",\n        \"url\": \"https://lendstack-s3.s3.us-east-2.amazonaws.com/bank_logos/057.png\",\n        \"activation_amount\": \"50.00\",\n        \"meta\": \"{\\\"mandate-activation-amount\\\":50,\\\"mandate-activation-bank\\\":\\\"Paystack-Titan\\\",\\\"mandate-activation-account-number\\\":\\\"9880218357\\\"}\"\n    },\n    \"meta\": {\n        \"cost\": 0,\n        \"balance\": 420\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Verify Bank Account Number",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const responseJson = pm.response.json();\r",
+											"\r",
+											"pm.test(\"HTTP Status code is as expected\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response Message is as expected\", function () {\r",
+											"    pm.expect(responseJson.message).to.equal(\"success\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"The rest of the Response Body is as expected\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"success\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"account_number\": \"2209529872\",\n    \"bank_code\": \"057\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}direct-debit/banks/account-lookup",
+									"host": [
+										"{{base_url}}direct-debit"
+									],
+									"path": [
+										"banks",
+										"account-lookup"
+									]
+								},
+								"description": "This endpoint is used to verify the validity and details of a Nigerian account number.\n\n#### Request Body Field\n\n| Field | Type | Description |\n| --- | --- | --- |\n| account_number | `string` | **Required**. A valid `NUBAN` account number which must be 10 digits. |\n| bank_id | `integer` | **Required**. Identifier of the bank to which the account belongs. |\n\n#### Response Body Field\n\n| Field | Type | Description |\n| --- | --- | --- |\n| account_name | `string` | Name of the account holder associated with the account number. |\n| bvn | `string` | Masked Bank Verification Number (BVN) associated with the account holder. If the BVN on the account is 22222222222 then it will be shown as 22000000022 |\n| session_id | `string` | Session ID or identifier associated with the account lookup operation. |"
+							},
+							"response": [
+								{
+									"name": "Verify Bank Account Number (Success)",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"account_number\": \"2209529872\",\n    \"bank_code\": \"057\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{base_url}}direct-debit/banks/account-lookup",
+											"host": [
+												"{{base_url}}direct-debit"
+											],
+											"path": [
+												"banks",
+												"account-lookup"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Sun, 30 Jun 2024 17:48:18 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "X-Request-ID",
+											"value": "c76deeb8-db8d-4e1a-8b81-365e21452639"
+										},
+										{
+											"key": "Last-Modified",
+											"value": "Sun, 30 Jun 2024 17:48:16 GMT"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"c6-OMPZHYhrlUzpreqQXdaviqo9PeQ\""
+										},
+										{
+											"key": "CF-Cache-Status",
+											"value": "DYNAMIC"
+										},
+										{
+											"key": "Server",
+											"value": "cloudflare"
+										},
+										{
+											"key": "CF-RAY",
+											"value": "89bffc79d90c52dc-LHR"
+										},
+										{
+											"key": "Content-Encoding",
+											"value": "gzip"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"success\",\n    \"message\": \"success\",\n    \"data\": {\n        \"account_name\": \"OLUWATOBI OLUWASEUNFUNMI FAROMOJU\",\n        \"bvn\": \"22000000069\",\n        \"session_id\": \"999999240630184817232769240424\"\n    },\n    \"meta\": {\n        \"cost\": 0,\n        \"balance\": 420\n    }\n}"
+								},
+								{
+									"name": "Verify Bank Account Number (Without Account Number)",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    //\"account_number\": \"2209529872\",\n    \"bank_code\": \"057\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{base_url}}direct-debit/banks/account-lookup",
+											"host": [
+												"{{base_url}}direct-debit"
+											],
+											"path": [
+												"banks",
+												"account-lookup"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Sun, 30 Jun 2024 17:48:57 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "113"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "X-Request-ID",
+											"value": "2404272e-5c43-470f-95b8-c4035d2b9f6d"
+										},
+										{
+											"key": "Last-Modified",
+											"value": "Sun, 30 Jun 2024 17:48:56 GMT"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"71-pj2iiLKI3dfnQLrIq3CPLfQslS0\""
+										},
+										{
+											"key": "CF-Cache-Status",
+											"value": "DYNAMIC"
+										},
+										{
+											"key": "Server",
+											"value": "cloudflare"
+										},
+										{
+											"key": "CF-RAY",
+											"value": "89bffd70eceb52dc-LHR"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"error\",\n    \"message\": \"account_number must be longer than or equal to 5 characters\",\n    \"meta\": {\n        \"balance\": 420\n    }\n}"
+								},
+								{
+									"name": "Verify Bank Account Number (Without Bank Code)",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"account_number\": \"2209529872\"\n    //\"bank_code\": \"057\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{base_url}}direct-debit/banks/account-lookup",
+											"host": [
+												"{{base_url}}direct-debit"
+											],
+											"path": [
+												"banks",
+												"account-lookup"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Sun, 30 Jun 2024 17:49:30 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "70"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "X-Request-ID",
+											"value": "c959259b-0c57-4e6b-84f1-a7e08ccc1f46"
+										},
+										{
+											"key": "Last-Modified",
+											"value": "Sun, 30 Jun 2024 17:49:30 GMT"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"46-5u+PEfNZq8/5c2k1U7w8smcVmSM\""
+										},
+										{
+											"key": "CF-Cache-Status",
+											"value": "DYNAMIC"
+										},
+										{
+											"key": "Server",
+											"value": "cloudflare"
+										},
+										{
+											"key": "CF-RAY",
+											"value": "89bffe462f7f52dc-LHR"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"error\",\n    \"message\": \"Bank is required\",\n    \"meta\": {\n        \"balance\": 420\n    }\n}"
+								},
+								{
+									"name": "Verify Bank Account Number (Invalid Account Number)",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"account_number\": \"Test343\",\n    \"bank_code\": \"057\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{base_url}}direct-debit/banks/account-lookup",
+											"host": [
+												"{{base_url}}direct-debit"
+											],
+											"path": [
+												"banks",
+												"account-lookup"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Sun, 30 Jun 2024 17:50:41 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "138"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "X-Request-ID",
+											"value": "06503bb4-d661-4d6a-a046-676d733e04e5"
+										},
+										{
+											"key": "Last-Modified",
+											"value": "Sun, 30 Jun 2024 17:50:40 GMT"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"8a-6dT3H0dJ6L1RwT/GpCHxGbL2KYM\""
+										},
+										{
+											"key": "CF-Cache-Status",
+											"value": "DYNAMIC"
+										},
+										{
+											"key": "Server",
+											"value": "cloudflare"
+										},
+										{
+											"key": "CF-RAY",
+											"value": "89bffffc3f7452dc-LHR"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"error\",\n    \"message\": \"Account Number can not be greater or less than 10,Account Number can only be numbers\",\n    \"meta\": {\n        \"balance\": 420\n    }\n}"
+								},
+								{
+									"name": "Verify Bank Account Number (Non-Existent Account Number)",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"account_number\": \"4893123478\",\n    \"bank_code\": \"057\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{base_url}}direct-debit/banks/account-lookup",
+											"host": [
+												"{{base_url}}direct-debit"
+											],
+											"path": [
+												"banks",
+												"account-lookup"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Sun, 30 Jun 2024 17:51:36 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "69"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "X-Request-ID",
+											"value": "c93fb1f1-b574-48ff-ae4b-a4adfc484eaa"
+										},
+										{
+											"key": "Last-Modified",
+											"value": "Sun, 30 Jun 2024 17:51:34 GMT"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"45-IIP9p1+kRegmP5PP/dQI1iLYjoI\""
+										},
+										{
+											"key": "CF-Cache-Status",
+											"value": "DYNAMIC"
+										},
+										{
+											"key": "Server",
+											"value": "cloudflare"
+										},
+										{
+											"key": "CF-RAY",
+											"value": "89c001506aa552dc-LHR"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"error\",\n    \"message\": \"Invalid Account\",\n    \"meta\": {\n        \"balance\": 420\n    }\n}"
+								},
+								{
+									"name": "Verify Bank Account Number (Invalid Bank Code)",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"account_number\": \"2209529872\",\n    \"bank_code\": \"Test\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{base_url}}direct-debit/banks/account-lookup",
+											"host": [
+												"{{base_url}}direct-debit"
+											],
+											"path": [
+												"banks",
+												"account-lookup"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Sun, 30 Jun 2024 17:52:21 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "X-Request-ID",
+											"value": "7b7aa70a-7953-4682-ac07-4b8506ba6a09"
+										},
+										{
+											"key": "Last-Modified",
+											"value": "Sun, 30 Jun 2024 17:52:20 GMT"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"44-bkL5mIvnKh1pZfGM/iC8R+Xg110\""
+										},
+										{
+											"key": "CF-Cache-Status",
+											"value": "DYNAMIC"
+										},
+										{
+											"key": "Server",
+											"value": "cloudflare"
+										},
+										{
+											"key": "CF-RAY",
+											"value": "89c0026e8d6c52dc-LHR"
+										},
+										{
+											"key": "Content-Encoding",
+											"value": "gzip"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"error\",\n    \"message\": \"Bank not found\",\n    \"meta\": {\n        \"balance\": 420\n    }\n}"
+								}
+							]
+						}
+					],
+					"description": "These endpoints are used to get the list of Nigerian banks, details of specific banks. They can also be used to bank account verification.\n\n#### Note\n\nNot all banks are included as some banks have either not implemented their direct debit service, or they return DO NOT HONOR on direct debit requests.\n\nIf a bank is missing, please email [support@lendsqr.com](https://mailto:support@lendsqr.com) for assistance or more details."
+				},
+				{
+					"name": "Mandates",
+					"item": [
+						{
+							"name": "Get All Mandates",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const responseJson = pm.response.json();\r",
+											"\r",
+											"pm.test(\"HTTP Status code is as expected\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response Message is as expected\", function () {\r",
+											"    pm.expect(responseJson.message).to.equal(\"success\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"The rest of the Response Body is as expected\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"success\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}direct-debit/mandates?limit=10&page=1",
+									"host": [
+										"{{base_url}}direct-debit"
+									],
+									"path": [
+										"mandates"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "10"
+										},
+										{
+											"key": "page",
+											"value": "1"
+										}
+									]
+								},
+								"description": "This endpoint is used to retrieve mandates or information for a specific mandate. The `reference_number` is the unique mandate ID generated when the mandate was created.\n\n#### Query Params\n\n| Field | Type | Description |\n| --- | --- | --- |\n| reference_number | `number` | **Required.** The reference number of the mandate you want to get the details of. |\n\n#### Response Body Fields\n\n| Field | Type | Description |\n| --- | --- | --- |\n| file | `number` | **Required.** The reference number of the mandate you want to get the details of. |"
+							},
+							"response": [
+								{
+									"name": "Get All Mandates (Success)",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{base_url}}direct-debit/mandates?limit=10&page=1",
+											"host": [
+												"{{base_url}}direct-debit"
+											],
+											"path": [
+												"mandates"
+											],
+											"query": [
+												{
+													"key": "limit",
+													"value": "10"
+												},
+												{
+													"key": "page",
+													"value": "1"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Sun, 30 Jun 2024 17:57:08 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "X-Request-ID",
+											"value": "ac108e1c-38c4-4974-8033-d27956fcdf9c"
+										},
+										{
+											"key": "Last-Modified",
+											"value": "Sun, 30 Jun 2024 17:57:08 GMT"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"96-5paImlBgfY/hjQJPxXdpz5vD4E0\""
+										},
+										{
+											"key": "CF-Cache-Status",
+											"value": "DYNAMIC"
+										},
+										{
+											"key": "Server",
+											"value": "cloudflare"
+										},
+										{
+											"key": "CF-RAY",
+											"value": "89c00973f95052dc-LHR"
+										},
+										{
+											"key": "Content-Encoding",
+											"value": "gzip"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"success\",\n    \"message\": \"success\",\n    \"data\": {\n        \"data\": [],\n        \"meta\": {\n            \"records\": 0,\n            \"page\": \"1\",\n            \"pages\": 0,\n            \"page_size\": \"10\"\n        }\n    },\n    \"meta\": {\n        \"cost\": 0,\n        \"balance\": 420\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Get Mandate Summary",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const responseJson = pm.response.json();\r",
+											"\r",
+											"pm.test(\"HTTP Status code is as expected\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response Message is as expected\", function () {\r",
+											"    pm.expect(responseJson.message).to.equal(\"success\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"The rest of the Response Body is as expected\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"success\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}direct-debit/mandates/stats",
+									"host": [
+										"{{base_url}}direct-debit"
+									],
+									"path": [
+										"mandates",
+										"stats"
+									]
+								},
+								"description": "This endpoints provides the summary of all mandates within the system.\n\n#### Response Body Fields\n\n| Field | Type | Description |\n| --- | --- | --- |\n| status | `string` | Mandate status (e.g., active, inactive) |\n| count | `number` | The count of each mandate status. |\n| data | `array` | An array containing objects with status and count information for different mandate statuses. |"
+							},
+							"response": [
+								{
+									"name": "Get Mandate Summary (Success)",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{base_url}}direct-debit/mandates/stats",
+											"host": [
+												"{{base_url}}direct-debit"
+											],
+											"path": [
+												"mandates",
+												"stats"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Sun, 30 Jun 2024 17:58:28 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "X-Request-ID",
+											"value": "c3e1833c-6842-4483-a422-187a98861dd0"
+										},
+										{
+											"key": "Last-Modified",
+											"value": "Sun, 30 Jun 2024 17:58:27 GMT"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"52-qZNHRJYhgrmufmi6YYPuL48H5zs\""
+										},
+										{
+											"key": "CF-Cache-Status",
+											"value": "DYNAMIC"
+										},
+										{
+											"key": "Server",
+											"value": "cloudflare"
+										},
+										{
+											"key": "CF-RAY",
+											"value": "89c00b66d97a52dc-LHR"
+										},
+										{
+											"key": "Content-Encoding",
+											"value": "gzip"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"success\",\n    \"message\": \"success\",\n    \"data\": [],\n    \"meta\": {\n        \"cost\": 0,\n        \"balance\": 420\n    }\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Transactions",
+					"item": [
+						{
+							"name": "Get All Transactions",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const responseJson = pm.response.json();\r",
+											"\r",
+											"pm.test(\"HTTP Status code is as expected\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response Message is as expected\", function () {\r",
+											"    pm.expect(responseJson.message).to.equal(\"success\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"The rest of the Response Body is as expected\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"success\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}direct-debit/transactions?limit=10&page=1",
+									"host": [
+										"{{base_url}}direct-debit"
+									],
+									"path": [
+										"transactions"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "10"
+										},
+										{
+											"key": "page",
+											"value": "1"
+										}
+									]
+								},
+								"description": "Retrieve the transactions related to the mandates associated with the API key.\n\n#### Response Body Fields\n\n| Field | Type | Description |\n| --- | --- | --- |\n| id | `integer` | The ID of the transaction. |\n| amount | String | The amount of the transaction. |\n| mandate_id | `integer` | The ID of the associated mandate. |\n| mandate_account_name | String | The account name associated with the mandate. |\n| mandate_account_number | `integer` | The account number associated with the mandate. |\n| mandate_bvn | String | The Bank Verification Number (BVN) associated with the mandate. |\n| reference | String | The reference number of the transaction. |\n| narration | String | The description or purpose of the transaction. |\n| beneficiary_id | `integer` | The ID of the recipient of the mandate debits. |\n| beneficiary_account_name | String | The account name of the recipient of the mandate debits. |\n| beneficiary_account_number | `integer` | The account number of the recipient of the mandate debits. |\n| beneficiary_bvn | String | The Bank Verification Number (BVN) of the beneficiary. |\n| session_id | String | The session ID associated with the transaction. |\n| status | String | The status of the transaction (e.g., success, failed). |\n| created_on | String | The date and time when the transaction was created. |\n| mandate_bank | `object` | The bank details associated with the mandate (see bank fields below). |\n\n#### Mandate Bank Fields\n\n| Field | Type | Description |\n| --- | --- | --- |\n| id | `integer` | The ID of the bank. |\n| name | String | The name of the bank. |\n| bank_code | String | The bank code associated with the bank. |\n| institution_code | String | The institution code associated with the bank. |\n| url | String | The URL of the bank (if available). |"
+							},
+							"response": [
+								{
+									"name": "Get All Transactions (Success)",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{base_url}}direct-debit/transactions?limit=10&page=1",
+											"host": [
+												"{{base_url}}direct-debit"
+											],
+											"path": [
+												"transactions"
+											],
+											"query": [
+												{
+													"key": "limit",
+													"value": "10"
+												},
+												{
+													"key": "page",
+													"value": "1"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Sun, 30 Jun 2024 17:59:28 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "X-Request-ID",
+											"value": "a211cf16-1846-4d60-bb60-dc351da1b7b4"
+										},
+										{
+											"key": "Last-Modified",
+											"value": "Sun, 30 Jun 2024 17:59:27 GMT"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"96-5paImlBgfY/hjQJPxXdpz5vD4E0\""
+										},
+										{
+											"key": "CF-Cache-Status",
+											"value": "DYNAMIC"
+										},
+										{
+											"key": "Server",
+											"value": "cloudflare"
+										},
+										{
+											"key": "CF-RAY",
+											"value": "89c00cdc8e6552dc-LHR"
+										},
+										{
+											"key": "Content-Encoding",
+											"value": "gzip"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"success\",\n    \"message\": \"success\",\n    \"data\": {\n        \"data\": [],\n        \"meta\": {\n            \"records\": 0,\n            \"page\": \"1\",\n            \"pages\": 0,\n            \"page_size\": \"10\"\n        }\n    },\n    \"meta\": {\n        \"cost\": 0,\n        \"balance\": 420\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Get Transactions Statistics",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const responseJson = pm.response.json();\r",
+											"\r",
+											"pm.test(\"HTTP Status code is as expected\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response Message is as expected\", function () {\r",
+											"    pm.expect(responseJson.message).to.equal(\"success\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"The rest of the Response Body is as expected\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"success\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{TOKEN}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}direct-debit/transactions/stats",
+									"host": [
+										"{{base_url}}direct-debit"
+									],
+									"path": [
+										"transactions",
+										"stats"
+									]
+								},
+								"description": "Retrieves the status of transactions associated with the API key.\n\n#### Response Body Fields\n\n| Field | Type | Description |\n| --- | --- | --- |\n| status | String | The status of the mandate transactions. |\n| count | `integer` | The number of transactions with the given status. |"
+							},
+							"response": [
+								{
+									"name": "Get Transactions Statistics (Success)",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{TOKEN}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}direct-debit/transactions/stats",
+											"host": [
+												"{{base_url}}direct-debit"
+											],
+											"path": [
+												"transactions",
+												"stats"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Sun, 30 Jun 2024 17:59:54 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "X-Request-ID",
+											"value": "6324e760-ddde-4bad-b935-5e9708ba0484"
+										},
+										{
+											"key": "Last-Modified",
+											"value": "Sun, 30 Jun 2024 17:59:53 GMT"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"8a-E1/1q4ttelS4ojqZIhqduvjuNH4\""
+										},
+										{
+											"key": "CF-Cache-Status",
+											"value": "DYNAMIC"
+										},
+										{
+											"key": "Server",
+											"value": "cloudflare"
+										},
+										{
+											"key": "CF-RAY",
+											"value": "89c00d813e8f52dc-LHR"
+										},
+										{
+											"key": "Content-Encoding",
+											"value": "gzip"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"success\",\n    \"message\": \"success\",\n    \"data\": {\n        \"transactions\": [\n            {\n                \"status\": \"total\",\n                \"count\": 0,\n                \"sum\": null\n            }\n        ]\n    },\n    \"meta\": {\n        \"cost\": 0,\n        \"balance\": 420\n    }\n}"
+								}
+							]
+						}
+					]
+				}
+			],
+			"description": "Endpoints for servicing debits from customer accounts"
+		},
+		{
+			"name": "Kolo",
+			"item": [
+				{
+					"name": "Exchange Code",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json();\r",
+									"\r",
+									"pm.test(\"HTTP Status code is as expected\", function () {\r",
+									"    pm.response.to.have.status(403);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response Message is as expected\", function () {\r",
+									"    pm.expect(responseJson.message).to.equal(\"You are not authorized to access this service.\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"The rest of the Response Body is as expected\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"error\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"redirect_uri\": \"https://belhope.lsq.app\",\n    \"grant_type\": \"authorization_code\",\n    \"code\": \"kEhA1fQsT86ZxCqh\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}kolo/auth",
+							"host": [
+								"{{base_url}}kolo"
+							],
+							"path": [
+								"auth"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Exchange Code (Forbidden)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"redirect_uri\": \"https://belhope.lsq.app\",\n    \"grant_type\": \"authorization_code\",\n    \"code\": \"kEhA1fQsT86ZxCqh\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}kolo/auth",
+									"host": [
+										"{{base_url}}kolo"
+									],
+									"path": [
+										"auth"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 30 Jun 2024 18:00:45 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "X-Request-ID",
+									"value": "a310cf3e-0416-496f-9340-0e576f1f0468"
+								},
+								{
+									"key": "Last-Modified",
+									"value": "Sun, 30 Jun 2024 18:00:45 GMT"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"4d-WouC4TdfEFtwBB5NUxZd24nKUGg\""
+								},
+								{
+									"key": "CF-Cache-Status",
+									"value": "DYNAMIC"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "89c00ec01f4c52dc-LHR"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"error\",\n    \"message\": \"You are not authorized to access this service.\"\n}"
+						}
+					]
+				},
+				{
+					"name": "List Transactions",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json();\r",
+									"\r",
+									"pm.test(\"HTTP Status code is as expected\", function () {\r",
+									"    pm.response.to.have.status(403);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response Message is as expected\", function () {\r",
+									"    pm.expect(responseJson.message).to.equal(\"You are not authorized to access this service.\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"The rest of the Response Body is as expected\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"error\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{x_access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}kolo/transactions",
+							"host": [
+								"{{base_url}}kolo"
+							],
+							"path": [
+								"transactions"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "List Transactions (Forbidden)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "{{x_access_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}kolo/transactions",
+									"host": [
+										"{{base_url}}kolo"
+									],
+									"path": [
+										"transactions"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 30 Jun 2024 18:02:36 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "X-Request-ID",
+									"value": "bbf1455d-95ef-466a-85b7-9bf033e1a190"
+								},
+								{
+									"key": "Last-Modified",
+									"value": "Sun, 30 Jun 2024 18:02:36 GMT"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"4d-WouC4TdfEFtwBB5NUxZd24nKUGg\""
+								},
+								{
+									"key": "CF-Cache-Status",
+									"value": "DYNAMIC"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "89c0117b99ec52dc-LHR"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"error\",\n    \"message\": \"You are not authorized to access this service.\"\n}"
+						}
+					]
+				}
+			],
+			"description": "Endpoints for Kolo, a Lendsqr service to consolidate all of a user's bank details to a single port.\n\nThis user does not have access to Kolo."
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{access_token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "access_token",
+			"value": "sk_live_mFcKdUYqowv8p7Jg45f54WgOgufp08DEoySKCBvT",
+			"type": "string"
+		},
+		{
+			"key": "base_url",
+			"value": "https://adjutor.lendsqr.com/v2/",
+			"type": "string"
+		},
+		{
+			"key": "identity",
+			"value": "faromoju@gmail.com",
+			"type": "string"
+		},
+		{
+			"key": "dummy_bvn",
+			"value": "12002278910",
+			"type": "string"
+		},
+		{
+			"key": "decision_model_id",
+			"value": "9236",
+			"type": "string"
+		},
+		{
+			"key": "bank_id",
+			"value": "41",
+			"type": "string"
+		}
+	]
+}
