@@ -1,6 +1,6 @@
 # Adjutor-API-Tests
 
-I used Postman in the creation and documentation of these test scripts.
+Postman was used in the creation and documentation of these test scripts.
 
 To set up and run the test scripts, follow these steps:
 
